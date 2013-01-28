@@ -1,18 +1,13 @@
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.*;
+import java.util.*;
+import java.util.regex.*;
 
-import akka.actor.ActorRef;
-import akka.actor.UntypedActor;
+import akka.actor.*;
 
 public class ScanActor extends UntypedActor {
 
 	private String fileName;
-	private String pattern;
+	private Pattern pattern;
 	private ActorRef collector;
 	
 	@Override
@@ -44,7 +39,8 @@ public class ScanActor extends UntypedActor {
 		int lineNumber = 0;
 		while ((line = in.readLine()) != null) {
 			lineNumber++;
-			if (line.matches(pattern)) {
+			Matcher lineMatcher = pattern.matcher(line);
+			if (lineMatcher.find()) {
 				results.add(lineNumber + " " + line);
 			}
 		}

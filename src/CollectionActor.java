@@ -9,6 +9,7 @@ public class CollectionActor extends UntypedActor {
 	
 	@Override
 	public void onReceive(Object message) throws Exception {
+		// If message is a file count
 		if (message instanceof Integer) {
 			fileCount = ((Integer) message).intValue();
 		}
@@ -21,7 +22,7 @@ public class CollectionActor extends UntypedActor {
 			}
 
 			for (String line : ((Found) message).getMatchingLines()) {
-				System.out.println(line);
+				System.out.println("\t" + line);
 			}
 			
 			System.out.println();
